@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "shadowfire"
+version = "0.1.0"
+description = "Firecrawl for the deep web — automated .onion crawling and LLM-ready Markdown extraction"
+requires-python = ">=3.11"
+dependencies = [
+    "stem>=1.8.2",
+    "playwright>=1.44.0",
+    "httpx[socks]>=0.27.0",
+    "beautifulsoup4>=4.12.0",
+    "html2text>=2024.2.26",
+    "markdownify>=0.12.1",
+    "asyncio-throttle>=1.0.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.23"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

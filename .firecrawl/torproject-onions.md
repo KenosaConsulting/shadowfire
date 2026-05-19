@@ -1,0 +1,271 @@
+# onion.torproject.org
+
+This is a list of [onion services](https://community.torproject.org/onion-services/overview/)
+run by the [Tor Project](https://www.torproject.org/). Most of them are served
+from several backends using
+[OnionBalance](https://gitlab.torproject.org/tpo/onion-services/onionbalance).
+
+- **[2019.www.torproject.org](https://2019.www.torproject.org/)**
+  - [http://jqyzxhjk6psc6ul5jnfwloamhtyh7si74b4743k2qgpskwwxrzhsxmad.onion/](http://jqyzxhjk6psc6ul5jnfwloamhtyh7si74b4743k2qgpskwwxrzhsxmad.onion/)
+- **[alertmanager-03.torproject.org](https://alertmanager-03.torproject.org/)**
+  - [http://kqkhhtu5jdsk7brqd3gfttdr7o2h76roecx6do4fzdlpz4xta23tupid.onion/](http://kqkhhtu5jdsk7brqd3gfttdr7o2h76roecx6do4fzdlpz4xta23tupid.onion/)
+- **[alertmanager-04.torproject.org](https://alertmanager-04.torproject.org/)**
+  - [http://hr4xjsjwqtgb7zfnes5hhpzlnsgqcvb6sd5yi3wh5jr7wur3sm7ip6qd.onion/](http://hr4xjsjwqtgb7zfnes5hhpzlnsgqcvb6sd5yi3wh5jr7wur3sm7ip6qd.onion/)
+- **[alertmanager2.torproject.org](https://alertmanager2.torproject.org/)**
+  - [http://uqduzmqiesrjqw2n7rc66h267mmbsxzacohrfhpoxm746wa46yh25jqd.onion/](http://uqduzmqiesrjqw2n7rc66h267mmbsxzacohrfhpoxm746wa46yh25jqd.onion/)
+- **[archive.torproject.org](https://archive.torproject.org/)**
+  - [http://uy3qxvwzwoeztnellvvhxh7ju7kfvlsauka7avilcjg7domzxptbq7qd.onion/](http://uy3qxvwzwoeztnellvvhxh7ju7kfvlsauka7avilcjg7domzxptbq7qd.onion/)
+- **[arti.torproject.org](https://arti.torproject.org/)**
+  - [http://hjirlp6fu47kox4cnede4zlvaeq672bibss3oxgmsnsc5mdxygqshbqd.onion/](http://hjirlp6fu47kox4cnede4zlvaeq672bibss3oxgmsnsc5mdxygqshbqd.onion/)
+- **[aus1.torproject.org](https://aus1.torproject.org/)**
+  - [http://ot3ivcdxmalbsbponeeq5222hftpf3pqil24q3s5ejwo5t52l65qusid.onion/](http://ot3ivcdxmalbsbponeeq5222hftpf3pqil24q3s5ejwo5t52l65qusid.onion/)
+- **[aus2.torproject.org](https://aus2.torproject.org/)**
+  - [http://b5t7emfr2rn3ixr4lvizpi3stnni4j4p6goxho7lldf4qg4hz5hvpqid.onion/](http://b5t7emfr2rn3ixr4lvizpi3stnni4j4p6goxho7lldf4qg4hz5hvpqid.onion/)
+- **[blog.torproject.org](https://blog.torproject.org/)**
+  - [http://pzhdfe7jraknpj2qgu5cz2u3i4deuyfwmonvzu5i3nyw4t4bmg7o5pad.onion/](http://pzhdfe7jraknpj2qgu5cz2u3i4deuyfwmonvzu5i3nyw4t4bmg7o5pad.onion/)
+- **[bridges.torproject.org](https://bridges.torproject.org/)**
+  - [http://yq5jjvr7drkjrelzhut7kgclfuro65jjlivyzfmxiq2kyv5lickrl4qd.onion/](http://yq5jjvr7drkjrelzhut7kgclfuro65jjlivyzfmxiq2kyv5lickrl4qd.onion/)
+- **[cloud.torproject.org](https://cloud.torproject.org/)**
+  - [http://ui3cpcohcoko6aydhuhlkwqqtvadhaflcc5zb7mwandqmcal7sbwzwqd.onion/](http://ui3cpcohcoko6aydhuhlkwqqtvadhaflcc5zb7mwandqmcal7sbwzwqd.onion/)
+- **[collector.torproject.org](https://collector.torproject.org/)**
+  - [http://pgmrispjerzzf2tdzbfp624cg5vpbvdw2q5a3hvtsbsx25vnni767yad.onion/](http://pgmrispjerzzf2tdzbfp624cg5vpbvdw2q5a3hvtsbsx25vnni767yad.onion/)
+- **[collector2.torproject.org](https://collector2.torproject.org/)**
+  - [http://urscdffm73o4y6hpp3r43bgmudq42hq2ibdpkld6a7hy3qa44qbvc2yd.onion/](http://urscdffm73o4y6hpp3r43bgmudq42hq2ibdpkld6a7hy3qa44qbvc2yd.onion/)
+- **[community.torproject.org](https://community.torproject.org/)**
+  - [http://xmrhfasfg5suueegrnc4gsgyi2tyclcy5oz7f5drnrodmdtob6t2ioyd.onion/](http://xmrhfasfg5suueegrnc4gsgyi2tyclcy5oz7f5drnrodmdtob6t2ioyd.onion/)
+- **[consensus-health.torproject.org](https://consensus-health.torproject.org/)**
+  - [http://tkskz5dkjel4xqyw5d5l3k52kgglotwn6vgb5wrl2oa5yi2szvywiyid.onion/](http://tkskz5dkjel4xqyw5d5l3k52kgglotwn6vgb5wrl2oa5yi2szvywiyid.onion/)
+- **[crm.torproject.org](https://crm.torproject.org/)**
+  - [http://6ojylpznauimd2fga3m7g24vd7ebkzlemxdprxckevqpzs347ugmynqd.onion/](http://6ojylpznauimd2fga3m7g24vd7ebkzlemxdprxckevqpzs347ugmynqd.onion/)
+- **[db.torproject.org](https://db.torproject.org/)**
+  - [http://epnxy4oscv3yh2fjwfrvctnjsmj5ta5uxdkq6k2ce7borqvcsk4qxhid.onion/](http://epnxy4oscv3yh2fjwfrvctnjsmj5ta5uxdkq6k2ce7borqvcsk4qxhid.onion/)
+- **[deb.tails.net](https://deb.tails.net/)**
+  - [http://umjqavufhoix3smyq6az2sx4istmuvsgmz4bq5u5x56rnayejoo6l2qd.onion/](http://umjqavufhoix3smyq6az2sx4istmuvsgmz4bq5u5x56rnayejoo6l2qd.onion/)
+- **[deb.torproject.org](https://deb.torproject.org/)**
+  - [http://apow7mjfryruh65chtdydfmqfpj5btws7nbocgtaovhvezgccyjazpqd.onion/](http://apow7mjfryruh65chtdydfmqfpj5btws7nbocgtaovhvezgccyjazpqd.onion/)
+- **[dev.crm.torproject.org](https://dev.crm.torproject.org/)**
+  - [http://eewp4iydzyu2a5d6bvqadadkozxdbhsdtmsoczu2joexfrjjsheaecad.onion/](http://eewp4iydzyu2a5d6bvqadadkozxdbhsdtmsoczu2joexfrjjsheaecad.onion/)
+- **[dist.torproject.org](https://dist.torproject.org/)**
+  - [http://scpalcwstkydpa3y7dbpkjs2dtr7zvtvdbyj3dqwkucfrwyixcl5ptqd.onion/](http://scpalcwstkydpa3y7dbpkjs2dtr7zvtvdbyj3dqwkucfrwyixcl5ptqd.onion/)
+- **[download.torproject.org](https://download.torproject.org/)**
+  - [http://vczcbkhpkhcywcyuyd7rfhu4bebsyscp2qoeyyvjva3km5py5rpisdid.onion/](http://vczcbkhpkhcywcyuyd7rfhu4bebsyscp2qoeyyvjva3km5py5rpisdid.onion/)
+- **[exonerator.torproject.org](https://exonerator.torproject.org/)**
+  - [http://pm46i5h2lfewyx6l7pnicbxhts2sxzacvsbmqiemqaspredf2gm3dpad.onion/](http://pm46i5h2lfewyx6l7pnicbxhts2sxzacvsbmqiemqaspredf2gm3dpad.onion/)
+- **[extra.torproject.org](https://extra.torproject.org/)**
+  - [http://kkr72iohlfix5ipjg776eyhplnl2oiv5tz4h2y2bkhjix3quafvjd5ad.onion/](http://kkr72iohlfix5ipjg776eyhplnl2oiv5tz4h2y2bkhjix3quafvjd5ad.onion/)
+- **[forum.torproject.org](https://forum.torproject.org/)**
+  - [http://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion/](http://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion/)
+- **[gitlab.torproject.org](https://gitlab.torproject.org/)**
+  - [http://eweiibe6tdjsdprb4px6rqrzzcsi22m4koia44kc5pcjr7nec2rlxyad.onion/](http://eweiibe6tdjsdprb4px6rqrzzcsi22m4koia44kc5pcjr7nec2rlxyad.onion/)
+- **[grafana-03.torproject.org](https://grafana-03.torproject.org/)**
+  - [http://llbjf7gllgf5zbnd35vobmlvn7xt425m7etyxy5uxayjyg67ucu4swad.onion/](http://llbjf7gllgf5zbnd35vobmlvn7xt425m7etyxy5uxayjyg67ucu4swad.onion/)
+- **[grafana-04.torproject.org](https://grafana-04.torproject.org/)**
+  - [http://4khyllm5ypl2j5qbhn2bygsbyso5m5tf2ihiuivtq45wo3j7l2x2i7qd.onion/](http://4khyllm5ypl2j5qbhn2bygsbyso5m5tf2ihiuivtq45wo3j7l2x2i7qd.onion/)
+- **[grafana2.torproject.org](https://grafana2.torproject.org/)**
+  - [http://f3vd6fyiccuppybkxiblgigej3pfvvqzjnhd3wyv7h4ee5asawf2fhqd.onion/](http://f3vd6fyiccuppybkxiblgigej3pfvvqzjnhd3wyv7h4ee5asawf2fhqd.onion/)
+- **[internetfreedom-snapshot.torproject.org](https://internetfreedom-snapshot.torproject.org/)**
+  - [http://dsa6c3pg2zrtyycchlitmkzk3o6qfyu3ga7gxk4ubopaga7hrxe2gdyd.onion/](http://dsa6c3pg2zrtyycchlitmkzk3o6qfyu3ga7gxk4ubopaga7hrxe2gdyd.onion/)
+- **[internetfreedom.torproject.org](https://internetfreedom.torproject.org/)**
+  - [http://swvbwbtmajvfrnz4wztx6ovshilm23ntigi73fz5wczj3aqdquq5icad.onion/](http://swvbwbtmajvfrnz4wztx6ovshilm23ntigi73fz5wczj3aqdquq5icad.onion/)
+- **[ircbouncer.torproject.org](https://ircbouncer.torproject.org/)**
+  - [http://moz5kotsnjony4oxccxfo4lwk3pvoxmdoljibhgoonzgzjs5oemtjmqd.onion/](http://moz5kotsnjony4oxccxfo4lwk3pvoxmdoljibhgoonzgzjs5oemtjmqd.onion/)
+- **[karma-03.torproject.org](https://karma-03.torproject.org/)**
+  - [http://y5burun7p37mc6lsstwwxgxblexa7fmlpisklaump3fmre2fr7nqhyyd.onion/](http://y5burun7p37mc6lsstwwxgxblexa7fmlpisklaump3fmre2fr7nqhyyd.onion/)
+- **[karma-04.torproject.org](https://karma-04.torproject.org/)**
+  - [http://ho33vhbzygv45wn4ek44hi3lckbhxm3gzyylf25w72uov3afj4s2nqqd.onion/](http://ho33vhbzygv45wn4ek44hi3lckbhxm3gzyylf25w72uov3afj4s2nqqd.onion/)
+- **[karma2.torproject.org](https://karma2.torproject.org/)**
+  - [http://h6necup44ztozsqs3my6g5pjljptqnm4auqrqcy6jdctoqvznmvh3qqd.onion/](http://h6necup44ztozsqs3my6g5pjljptqnm4auqrqcy6jdctoqvznmvh3qqd.onion/)
+- **[lists-01.torproject.org](https://lists-01.torproject.org/)**
+  - [http://e6r6heg2ucmlm2po5yrxzf6k23ta5wwbt2adogjcyntlaiopytjz35yd.onion/](http://e6r6heg2ucmlm2po5yrxzf6k23ta5wwbt2adogjcyntlaiopytjz35yd.onion/)
+- **[metrics.torproject.org](https://metrics.torproject.org/)**
+  - [http://hctxrvjzfpvmzh2jllqhgvvkoepxb4kfzdjm6h7egcwlumggtktiftid.onion/](http://hctxrvjzfpvmzh2jllqhgvvkoepxb4kfzdjm6h7egcwlumggtktiftid.onion/)
+- **[moat.torproject.org](https://moat.torproject.org/)**
+  - [http://z7m7ogzdhu43nosvjtsuplfmuqa3ge5obahixydhmzdox6owwxfoxzid.onion/](http://z7m7ogzdhu43nosvjtsuplfmuqa3ge5obahixydhmzdox6owwxfoxzid.onion/)
+- **[newsletter.torproject.org](https://newsletter.torproject.org/)**
+  - [http://a4ygisnerpgtc5ayerl22pll6cls3oyj54qgpm7qrmb66xrxts6y3lyd.onion/](http://a4ygisnerpgtc5ayerl22pll6cls3oyj54qgpm7qrmb66xrxts6y3lyd.onion/)
+- **[nightlies.tbb.torproject.org](https://nightlies.tbb.torproject.org/)**
+  - [http://umj4zbqdfcyevlkgqgpq6foxk3z75zzxsbgt5jqmfxofrbrjh3crbnad.onion/](http://umj4zbqdfcyevlkgqgpq6foxk3z75zzxsbgt5jqmfxofrbrjh3crbnad.onion/)
+- **[nyx.torproject.org](https://nyx.torproject.org/)**
+  - [http://3ewfgrt4gzfccp6bnquhqb266r3zepiqpnsk3falwygkegtluwuyevid.onion/](http://3ewfgrt4gzfccp6bnquhqb266r3zepiqpnsk3falwygkegtluwuyevid.onion/)
+- **[onion.torproject.org](https://onion.torproject.org/)**
+  - [http://xao2lxsmia2edq2n5zxg6uahx6xox2t7bfjw6b5vdzsxi7ezmqob6qid.onion/](http://xao2lxsmia2edq2n5zxg6uahx6xox2t7bfjw6b5vdzsxi7ezmqob6qid.onion/)
+- **[onionservices.torproject.org](https://onionservices.torproject.org/)**
+  - [http://ttevhjjsjxz6uqqcjkbig5cycd7n7xv7cmd6f5fcvrqaaa7f3bj36wad.onion/](http://ttevhjjsjxz6uqqcjkbig5cycd7n7xv7cmd6f5fcvrqaaa7f3bj36wad.onion/)
+- **[openpgpkey.torproject.org](https://openpgpkey.torproject.org/)**
+  - [http://2yldcptk56shc7lwieozoglw3t5ghty7m6mf2faysvfnzccqavbu2mad.onion/](http://2yldcptk56shc7lwieozoglw3t5ghty7m6mf2faysvfnzccqavbu2mad.onion/)
+- **[people.torproject.org](https://people.torproject.org/)**
+  - [http://5ecey6oe4rocdsfoigr4idu42cecm2j7zfogc3xc7kfn4uriehwrs6qd.onion/](http://5ecey6oe4rocdsfoigr4idu42cecm2j7zfogc3xc7kfn4uriehwrs6qd.onion/)
+- **[prometheus-03.torproject.org](https://prometheus-03.torproject.org/)**
+  - [http://uwkznof42jqlxzqlbp4xctv46ozfi6muecnstspvdfd4r22nmq2cuwqd.onion/](http://uwkznof42jqlxzqlbp4xctv46ozfi6muecnstspvdfd4r22nmq2cuwqd.onion/)
+- **[prometheus-04.torproject.org](https://prometheus-04.torproject.org/)**
+  - [http://tthezy6mn2b4hjnimslevg7tyjtnm62wpegehasy3vu7xx3zerncxzqd.onion/](http://tthezy6mn2b4hjnimslevg7tyjtnm62wpegehasy3vu7xx3zerncxzqd.onion/)
+- **[prometheus2.torproject.org](https://prometheus2.torproject.org/)**
+  - [http://vyo6yrqhl3by7d6n5t6hjkflaqbarjpqjnvapr5u5rafk4imnfrmcjyd.onion/](http://vyo6yrqhl3by7d6n5t6hjkflaqbarjpqjnvapr5u5rafk4imnfrmcjyd.onion/)
+- **[rbm.torproject.org](https://rbm.torproject.org/)**
+  - [http://nkuz2tpok7ctwd5ueer5bytj3bm42vp7lgjcsnznal3stotg6vyaakyd.onion/](http://nkuz2tpok7ctwd5ueer5bytj3bm42vp7lgjcsnznal3stotg6vyaakyd.onion/)
+- **[rdsys-moat.torproject.org](https://rdsys-moat.torproject.org/)**
+  - [http://jcbdm4biw3aac57snk34brzc5fghbszrzde47idnlanj6kf6jmocdgqd.onion/](http://jcbdm4biw3aac57snk34brzc5fghbszrzde47idnlanj6kf6jmocdgqd.onion/)
+- **[research.torproject.org](https://research.torproject.org/)**
+  - [http://xhqthou6scpfnwjyzc3ekdgcbvj76ccgyjyxp6cgypxjlcuhnxiktnqd.onion/](http://xhqthou6scpfnwjyzc3ekdgcbvj76ccgyjyxp6cgypxjlcuhnxiktnqd.onion/)
+- **[review.torproject.net](https://review.torproject.net/)**
+  - [http://zhkhhhnppc5k6xju7n25rjba3wuip73jnodicxl65qdpchrwvvsilcyd.onion/](http://zhkhhhnppc5k6xju7n25rjba3wuip73jnodicxl65qdpchrwvvsilcyd.onion/)
+- **[rpm.torproject.org](https://rpm.torproject.org/)**
+  - [http://4ayyzfoh5qdrokqaejis3rdredhvf22n3migyxfudpkpunngfc7g4lqd.onion/](http://4ayyzfoh5qdrokqaejis3rdredhvf22n3migyxfudpkpunngfc7g4lqd.onion/)
+- **[snowflake.torproject.org](https://snowflake.torproject.org/)**
+  - [http://oljlphash3bpqtrvqpr5gwzrhroziw4mddidi5d2qa4qjejcbrmoypqd.onion/](http://oljlphash3bpqtrvqpr5gwzrhroziw4mddidi5d2qa4qjejcbrmoypqd.onion/)
+- **[spec.torproject.org](https://spec.torproject.org/)**
+  - [http://i3xi5qxvbrngh3g6o7czwjfxwjzigook7zxzjmgwg5b7xnjcn5hzciad.onion/](http://i3xi5qxvbrngh3g6o7czwjfxwjzigook7zxzjmgwg5b7xnjcn5hzciad.onion/)
+- **[staging.crm.torproject.org](https://staging.crm.torproject.org/)**
+  - [http://pt34uujusar4arrvsqljndqlt7tck2d5cosaav5xni4nh7bmvshyp2yd.onion/](http://pt34uujusar4arrvsqljndqlt7tck2d5cosaav5xni4nh7bmvshyp2yd.onion/)
+- **[status.torproject.org](https://status.torproject.org/)**
+  - [http://eixoaclv7qvnmu5rolbdwba65xpdiditdoyp6edsre3fitad777jr3ad.onion/](http://eixoaclv7qvnmu5rolbdwba65xpdiditdoyp6edsre3fitad777jr3ad.onion/)
+- **[stem.torproject.org](https://stem.torproject.org/)**
+  - [http://mf34jlghauz5pxjcmdymdqbe5pva4v24logeys446tdrgd5lpsrocmqd.onion/](http://mf34jlghauz5pxjcmdymdqbe5pva4v24logeys446tdrgd5lpsrocmqd.onion/)
+- **[styleguide.torproject.org](https://styleguide.torproject.org/)**
+  - [http://7khzpw47s35pwo3lvtctwf2szvnq3kgglvzc22elx7of2awdzpovqmqd.onion/](http://7khzpw47s35pwo3lvtctwf2szvnq3kgglvzc22elx7of2awdzpovqmqd.onion/)
+- **[submission.torproject.org](https://submission.torproject.org/)**
+  - [http://givpjczyrb5jjseful3o5tn3tg7tidbu4gydl4sa5ekpcipivqaqnpad.onion/](http://givpjczyrb5jjseful3o5tn3tg7tidbu4gydl4sa5ekpcipivqaqnpad.onion/)
+- **[support.torproject.org](https://support.torproject.org/)**
+  - [http://rzuwtpc4wb3xdzrj3yeajsvm3fkq4vbeubm2tdxaqruzzzgs5dwemlad.onion/](http://rzuwtpc4wb3xdzrj3yeajsvm3fkq4vbeubm2tdxaqruzzzgs5dwemlad.onion/)
+- **[survey.torproject.org](https://survey.torproject.org/)**
+  - [http://eh5esdnd6fkbkapfc6nuyvkjgbtnzq2is72lmpwbdbxepd2z7zbgzsqd.onion/](http://eh5esdnd6fkbkapfc6nuyvkjgbtnzq2is72lmpwbdbxepd2z7zbgzsqd.onion/)
+- **[svn-archive.torproject.org](https://svn-archive.torproject.org/)**
+  - [http://b63iq6es4biaawfilwftlfkw6a6putogxh4iakei2ioppb7dsfucekyd.onion/](http://b63iq6es4biaawfilwftlfkw6a6putogxh4iakei2ioppb7dsfucekyd.onion/)
+- **[tails.net](https://tails.net/)**
+  - [http://tzoz3bensgxyzs7da7lpgsn3a74h7hlbm4wa6ytq2tg6ktd57w22vqqd.onion/](http://tzoz3bensgxyzs7da7lpgsn3a74h7hlbm4wa6ytq2tg6ktd57w22vqqd.onion/)
+- **[tb-manual.torproject.org](https://tb-manual.torproject.org/)**
+  - [http://dsbqrprgkqqifztta6h3w7i2htjhnq7d3qkh3c7gvc35e66rrcv66did.onion/](http://dsbqrprgkqqifztta6h3w7i2htjhnq7d3qkh3c7gvc35e66rrcv66did.onion/)
+- **[test-data.tbb.torproject.org](https://test-data.tbb.torproject.org/)**
+  - [http://umbk3kbgov4ekg264yulvbrpykfye7ohguqbds53qn547mdpt6o4qkad.onion/](http://umbk3kbgov4ekg264yulvbrpykfye7ohguqbds53qn547mdpt6o4qkad.onion/)
+- **[www.onion-router.net](https://www.onion-router.net/)**
+  - [http://tttyx2vwp7ihml3vkhywwcizv6nbwrikpgeciy3qrow7l7muak2pnhad.onion/](http://tttyx2vwp7ihml3vkhywwcizv6nbwrikpgeciy3qrow7l7muak2pnhad.onion/)
+- **[www.torproject.org](https://www.torproject.org/)**
+  - [http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion/](http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion/)
+
+## Legacy adresses
+
+This is a list of [deprecated onion v2 addresses](https://support.torproject.org/onionservices/v2-deprecation/)
+which are no longer in use by the Tor Project. It is kept here for historical reasons.
+
+- **[2019.www.torproject.org](https://2019.www.torproject.org/)**
+  - http://qrmfuxwgyzk5jdjz.onion/
+- **[api.donate.torproject.org](https://api.donate.torproject.org/)**
+  - http://juye6fmalhtxnpkp.onion/
+- **[archive.torproject.org](https://archive.torproject.org/)**
+  - http://e4nybovdbcwaqlyt.onion/
+- **[aus1.torproject.org](https://aus1.torproject.org/)**
+  - http://x3nelbld33llasqv.onion/
+- **[aus2.torproject.org](https://aus2.torproject.org/)**
+  - http://vijs2fmpd72nbqok.onion/
+- **[blog.torproject.org](https://blog.torproject.org/)**
+  - http://5bkgzumtxvomufam.onion/
+- **[bridges.torproject.org](https://bridges.torproject.org/)**
+  - http://z5tfsnikzulwicxs.onion/
+- **[cloud.torproject.org](https://cloud.torproject.org/)**
+  - http://icxe4yp32mq6gm6n.onion/
+- **[collector.torproject.org](https://collector.torproject.org/)**
+  - http://qigcb4g4xxbh5ho6.onion/
+- **[collector2.torproject.org](https://collector2.torproject.org/)**
+  - http://kkvj4mhsttfcrksj.onion/
+- **[community.torproject.org](https://community.torproject.org/)**
+  - http://3gldbgtv5e4god56.onion/
+- **[consensus-health.torproject.org](https://consensus-health.torproject.org/)**
+  - http://tgnv2pssfumdedyw.onion/
+- **[crm.torproject.org](https://crm.torproject.org/)**
+  - http://5bam5t36aombgv76.onion/
+- **[deb.torproject.org](https://deb.torproject.org/)**
+  - http://sdscoq7snqtznauu.onion/
+- **[dev.crm.torproject.org](https://dev.crm.torproject.org/)**
+  - http://xncm42hfakcqgzsq.onion/
+- **[dist.torproject.org](https://dist.torproject.org/)**
+  - http://7ptfusn4rlra42c3.onion/
+- **[donate-api.torproject.org](https://donate-api.torproject.org/)**
+  - http://rjrsgw3y2wzqmnvv.onion/
+- **[donate.torproject.org](https://donate.torproject.org/)**
+  - http://gsxohj375bk7gjal.onion/
+- **[exonerator.torproject.org](https://exonerator.torproject.org/)**
+  - http://zfu7x4fuagirknhb.onion/
+- **[extra.torproject.org](https://extra.torproject.org/)**
+  - http://klbl4glo2btuwyok.onion/
+- **[gettor.torproject.org](https://gettor.torproject.org/)**
+  - http://tngjm3owsslo3wgo.onion/
+- **[git.torproject.org](https://git.torproject.org/)**
+  - http://gzgme7ov25seqjbphab4fkcph3jkobfwwpivt5kzbv3kqx2y2qttl4yd.onion/
+- **[gitlab.torproject.org](https://gitlab.torproject.org/)**
+  - http://pxgwt63hbrrxktuw.onion/
+- **[gitweb.torproject.org](https://gitweb.torproject.org/)**
+  - http://jqs44zhtxl2uo6gk.onion/
+- **[grafana1.torproject.org](https://grafana1.torproject.org/)**
+  - http://odz6noxeukaw43e7.onion/
+- **[grafana2.torproject.org](https://grafana2.torproject.org/)**
+  - http://btqwlm5n6filwdoj.onion/
+- **[ircbouncer.torproject.org](https://ircbouncer.torproject.org/)**
+  - http://eibwzyiqgk6vgugg.onion/
+- **[metrics.torproject.org](https://metrics.torproject.org/)**
+  - http://rougmnvswfsmd4dq.onion/
+- **[moat.torproject.org](https://moat.torproject.org/)**
+  - http://ie652pyujfijtm3a.onion/
+- **[nagios.torproject.org](https://nagios.torproject.org/)**
+  - http://l3xrunzkfufzvw2c.onion/
+- **[newsletter.torproject.org](https://newsletter.torproject.org/)**
+  - http://kzcx36ytbsm5iogs.onion/
+- **[nightlies.tbb.torproject.org](https://nightlies.tbb.torproject.org/)**
+  - http://sp35spuami3hnud4.onion/
+- **[nyx.torproject.org](https://nyx.torproject.org/)**
+  - http://ebxqgaz3dwywcoxl.onion/
+- **[onion.torproject.org](https://onion.torproject.org/)**
+  - http://yz7lpwfhhzcdyc5y.onion/
+- **[onionoo.torproject.org](https://onionoo.torproject.org/)**
+  - http://tgel7v4rpcllsrk2.onion/
+- **[openpgpkey.torproject.org](https://openpgpkey.torproject.org/)**
+  - http://rh7jaux2r3tzrqp4.onion/
+- **[people.torproject.org](https://people.torproject.org/)**
+  - http://sbe5fi5cka5l3fqe.onion/
+- **[prometheus2.torproject.org](https://prometheus2.torproject.org/)**
+  - http://hyntj47ow4ermsrh.onion/
+- **[rbm.torproject.org](https://rbm.torproject.org/)**
+  - http://yabd3wlpvybdnvzg.onion/
+- **[research.torproject.org](https://research.torproject.org/)**
+  - http://wcgqzqyfi7a6iu62.onion/
+- **[review.torproject.net](https://review.torproject.net/)**
+  - http://trpub2cacmeysev6.onion/
+- **[rpm.torproject.org](https://rpm.torproject.org/)**
+  - http://6m6blys5mwg2jwex.onion/
+- **[snowflake.torproject.org](https://snowflake.torproject.org/)**
+  - http://fhny6b7b6sbslc2b.onion/
+- **[spec.torproject.org](https://spec.torproject.org/)**
+  - http://s2bweojt5vg52e5i.onion/
+- **[staging-api.donate.torproject.org](https://staging-api.donate.torproject.org/)**
+  - http://wmp3rah3h7p6tjcm.onion/
+- **[staging.crm.torproject.org](https://staging.crm.torproject.org/)**
+  - http://nwoyhtkk4tloji3j.onion/
+- **[staging.donate-api.torproject.org](https://staging.donate-api.torproject.org/)**
+  - http://qbnprwaqyglijwqq.onion/
+- **[status.torproject.org](https://status.torproject.org/)**
+  - http://4wfea3faosc4srjs.onion/
+- **[stem.torproject.org](https://stem.torproject.org/)**
+  - http://vt5hknv6sblkgf22.onion/
+- **[styleguide.torproject.org](https://styleguide.torproject.org/)**
+  - http://buqlpzbbcyat2jiy.onion/
+- **[submission.torproject.org](https://submission.torproject.org/)**
+  - http://6f3p25m7ac2qmpjc.onion/
+- **[support.torproject.org](https://support.torproject.org/)**
+  - http://4bflp2c4tnynnbes.onion/
+- **[survey.torproject.org](https://survey.torproject.org/)**
+  - http://bogdyardcfurxcle.onion/
+- **[svn-archive.torproject.org](https://svn-archive.torproject.org/)**
+  - http://2xcd24wfjiqwzwnr.onion/
+- **[tb-manual.torproject.org](https://tb-manual.torproject.org/)**
+  - http://dgvdmophvhunawds.onion/
+- **[test-api.donate.torproject.org](https://test-api.donate.torproject.org/)**
+  - http://nqybwehzfmgwn4in.onion/
+- **[test-data.tbb.torproject.org](https://test-data.tbb.torproject.org/)**
+  - http://fylvgu5r6gcdadeo.onion/
+- **[test.crm.torproject.org](https://test.crm.torproject.org/)**
+  - http://2iqyjmvrkrq5h5mg.onion/
+- **[test.donate-api.torproject.org](https://test.donate-api.torproject.org/)**
+  - http://g2xie2z5bp5f6doi.onion/
+- **[www.onion-router.net](https://www.onion-router.net/)**
+  - http://hzmun3rnnxjhkyhg.onion/
+- **[www.torproject.org](https://www.torproject.org/)**
+  - http://expyuzz4wqqyqhjn.onion/
