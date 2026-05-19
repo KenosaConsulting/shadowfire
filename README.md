@@ -16,6 +16,7 @@ TorController (stem)            — Tor process lifecycle, NEWNYM circuit rotati
             │       └── wrap()         — <untrusted_source> boundary for LLM consumption
             │
             ├── fetch/http.py          — httpx SOCKS5 client, follow redirects
+            ├── fetch/browser.py       — Playwright/Firefox fallback for JS-heavy pages
             │
             ├── extract/               — Firecrawl-parity extraction pipeline
             │       ├── cleaner.py     — 42-selector noise removal, main content isolation
@@ -29,7 +30,7 @@ TorController (stem)            — Tor process lifecycle, NEWNYM circuit rotati
             │       ├── enrich()       — ReaderLM-v2: schema-driven JSON extraction (async)
             │       └── SCHEMAS        — 8 page types, dispatched via auto()
             │
-            ├── api.py                 — scrape() + crawl() public surface
+            ├── api.py                 — scrape(url, js=False) + crawl() public surface
             │
             └── store.py               — DuckDB persistence (data/shadowfire.db)
 ```
@@ -93,22 +94,48 @@ For development, use `python3 -m pip install -e .` instead of `python3 -m pip in
 
 ## Usage
 
+### CLI
+
+```bash
+# Single page → Markdown on stdout
+shadowfire scrape http://example.onion/
+
+# Force Playwright rendering (JS-heavy SPAs); auto-triggered when content < 200 chars
+shadowfire scrape --js http://example.onion/
+
+# Full Document as JSON; optionally scan for prompt injection
+shadowfire scrape --json --guard http://example.onion/
+
+# BFS crawl — prints summary table (URL / HTTP / chars / title)
+shadowfire crawl http://example.onion/ --depth 2 --max-pages 50 --concurrency 3
+
+# JSON output for piping
+shadowfire crawl --json http://example.onion/ | jq 'keys'
+```
+
+### Python API
+
 ```python
 from shadowfire.api import scrape, crawl
 from shadowfire.guard import has_injection, wrap
 
-# Single page
+# Single page — browser fallback fires automatically when content is sparse
 doc = scrape("http://example.onion/")
-print(doc.metadata.title)
-print(doc.markdown)
+
+# Force Playwright rendering for known JS-heavy sites
+doc = scrape("http://example.onion/", js=True)
 
 # Check for prompt injection before passing to an LLM
 if not has_injection(doc.markdown):
     llm_input = wrap(doc.markdown)
 
-# BFS crawl — returns {url: Document}
+# BFS crawl — returns {url: Document}; browser fallback applies per-page
 results = crawl("http://example.onion/", depth=2, max_pages=50)
 ```
+
+### JS rendering
+
+`fetch/browser.py` wraps Playwright/Firefox routed through the same Tor SOCKS5 proxy. It fires automatically in both `scrape()` and the crawler when the httpx result yields fewer than 200 chars of Markdown — the same threshold `llm.triage()` uses to flag thin content. Pass `js=True` (API) or `--js` (CLI) to force it regardless of content length.
 
 ### LLM tier
 
@@ -234,7 +261,6 @@ Same `torrc` content. Two changes in code:
 - [`docs/llm-tier.md`](docs/llm-tier.md) — small-LLM tier: triage, enrich, schema design, benchmark results, license posture
 
 Deferred features:
-- **Playwright browser layer** — for JS-heavy sites that return thin content
 - **Parallel Tor circuits** — multiple `SOCKSPort` entries for concurrent crawling
 - **NEWNYM retry integration** — circuit rotation wired into the crawler's retry ladder
 - **PII stripping** — presidio-analyzer before scraped content enters LLM context

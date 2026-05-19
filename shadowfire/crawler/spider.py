@@ -1,8 +1,11 @@
 import asyncio
 from shadowfire.fetch.http import fetch
+from shadowfire.fetch.browser import fetch as browser_fetch
 from shadowfire.extract import process
 from shadowfire.extract.document import Document
 from shadowfire.guard import safe_url
+
+_SPARSE = 200
 
 
 def _onion_links(doc: Document, visited: set) -> list[str]:
@@ -18,16 +21,20 @@ async def _fetch_one(url: str, sem: asyncio.Semaphore) -> tuple[str, Document | 
             r = await asyncio.to_thread(fetch, url)
             doc = process(r.text, url=str(r.url))
             doc.metadata.status_code = r.status_code
+            if len((doc.markdown or "").strip()) < _SPARSE:
+                raw = await browser_fetch(url)
+                doc = process(raw, url=url)
+                doc.metadata.status_code = r.status_code
             return url, doc
         except Exception as e:
             return url, e
 
 
-async def crawl(start: str, depth: int = 2, max_pages: int = 50, concurrency: int = 3) -> dict[str, Document]:
+async def crawl(start: str | list[str], depth: int = 2, max_pages: int = 50, concurrency: int = 3) -> dict[str, Document]:
     visited: set[str] = set()
     results: dict[str, Document] = {}
     sem = asyncio.Semaphore(concurrency)
-    frontier = [(start, 0)]
+    frontier = [(u, 0) for u in ([start] if isinstance(start, str) else start)]
 
     while frontier and len(results) < max_pages:
         url, d = frontier.pop(0)
