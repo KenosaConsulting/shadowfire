@@ -42,6 +42,15 @@ TorController (stem)            — Tor process lifecycle, NEWNYM circuit rotati
 
 - Python 3.11+
 - Tor (`brew install tor` on macOS, `sudo apt install tor` on Linux)
+- DuckDB Python package (installed with the project; creates a local `data/shadowfire.db` file)
+
+## Stack
+
+- `shadowfire/store.py` uses DuckDB for local persistence and analytics
+- `data/shadowfire.db` is the default local database file
+- The database file is ignored by Git so each user gets their own local copy
+- `shadowfire.store.init()` creates the tables and applies additive migrations
+- The test scripts call `init()` automatically before writing results
 
 ## Setup
 
@@ -71,6 +80,14 @@ sudo systemctl enable --now tor
 python3 -m venv .venv
 .venv/bin/pip install -e .
 ```
+
+**4. Create your local DuckDB**
+
+```bash
+python3 -c "from shadowfire.store import init; init()"
+```
+
+This creates `data/shadowfire.db` and the `runs` / `pages` tables if they do not exist yet. If you want to reset the local database, delete `data/shadowfire.db` and run the command again.
 
 ## Usage
 
@@ -139,6 +156,8 @@ data = auto(doc.markdown, t["page_type"])
 ## Storage schema
 
 Results persist to `data/shadowfire.db` (DuckDB) across all runs.
+
+The file is local to your machine and not tracked in Git. If it is missing, `shadowfire.store.init()` will recreate it and initialize the schema.
 
 **`runs`** — one row per test execution
 

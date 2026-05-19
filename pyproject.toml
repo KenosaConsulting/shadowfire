@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "Firecrawl for the deep web — automated .onion crawling and LLM-ready Markdown extraction"
 requires-python = ">=3.11"
 dependencies = [
+    "duckdb>=1.0.0",
     "stem>=1.8.2",
     "playwright>=1.44.0",
     "httpx[socks]>=0.27.0",
