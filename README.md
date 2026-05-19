@@ -78,16 +78,18 @@ sudo systemctl enable --now tor
 
 ```bash
 python3 -m venv .venv
-.venv/bin/pip install -e .
+python3 -m pip install .
 ```
 
 **4. Create your local DuckDB**
 
 ```bash
-python3 -c "from shadowfire.store import init; init()"
+shadowfire init-db
 ```
 
 This creates `data/shadowfire.db` and the `runs` / `pages` tables if they do not exist yet. If you want to reset the local database, delete `data/shadowfire.db` and run the command again.
+
+For development, use `python3 -m pip install -e .` instead of `python3 -m pip install .`. Either way, the `shadowfire` command and `python -m shadowfire init-db` both initialize the same local DuckDB file.
 
 ## Usage
 
