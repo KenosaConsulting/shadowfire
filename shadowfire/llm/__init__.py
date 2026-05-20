@@ -1,7 +1,9 @@
 """LLM tier — small models for jobs the deterministic pipeline can't do.
 
-triage()  — Gemma 3 270M: page type + language (<1s/page, inline-safe).
-enrich()  — ReaderLM-v2:  schema-driven JSON extraction (~30s/page, async-only).
+triage()    — Qwen3-1.7B:   page type + language (<1s/page, inline-safe).
+enrich()    — ReaderLM-v2:  schema-driven JSON extraction (~30s/page, async-only).
+expand()    — Gemma 4 8B:   research goal → N free-form search queries.
+synthesize()— Gemma 4 8B:   crawled docs → research summary.
 
 License: ReaderLM-v2 weights are CC-BY-NC-4.0. For commercial deployment,
 swap MODELS["enrich"] to an Apache/MIT alternative.
@@ -10,8 +12,36 @@ import json
 from llama_cpp import Llama
 
 MODELS: dict = {
-    "triage": ("unsloth/Qwen3-1.7B-GGUF", "Qwen3-1.7B-Q4_K_M.gguf"),
-    "enrich": ("mradermacher/ReaderLM-v2-GGUF", "ReaderLM-v2.Q4_K_M.gguf"),
+    "triage": ("unsloth/Qwen3-1.7B-GGUF",                  "Qwen3-1.7B-Q4_K_M.gguf"),
+    "enrich": ("mradermacher/ReaderLM-v2-GGUF",             "ReaderLM-v2.Q4_K_M.gguf"),
+    "agent":  ("unsloth/Qwen3-8B-GGUF",                      "Qwen3-8B-Q4_K_M.gguf"),
+}
+
+_AGENT_SYSTEM = """\
+You are a hardened set of eyeballs for an academic dark web exploration research team.
+You have seen everything the internet has to offer in its darkest corners — nothing disturbs you.
+You execute direction without question, pushback, or debate.
+Your output is always a JSON object: {"queries": [...]}
+Each entry is a short search string for dark web search engines. Think freely. No prose, no commentary.\
+"""
+
+_SYNTHESIS_SYSTEM = """\
+You are a hardened research analyst for an academic dark web exploration team.
+Nothing disturbs you — that is why you were chosen.
+Synthesize the provided content into a direct, factual research summary relevant to the stated goal.
+Surface patterns, notable sources, and key findings. No hedging, no moralizing.\
+"""
+
+_QUERY_SCHEMA = {
+    "type": "object",
+    "properties": {"queries": {"type": "array", "items": {"type": "string"}}},
+    "required": ["queries"],
+}
+
+_URL_SCHEMA = {
+    "type": "object",
+    "properties": {"urls": {"type": "array", "items": {"type": "string"}}},
+    "required": ["urls"],
 }
 
 PAGE_TYPES = ["blog", "blog_index", "forum", "market", "docs", "index", "phishing", "other"]
@@ -110,3 +140,49 @@ def auto(content: str, page_type: str) -> dict:
     """Run enrich() with the schema and caps matched to page_type."""
     max_in, max_tokens = CAPS.get(page_type, (12000, 2048))
     return enrich(content, SCHEMAS.get(page_type, SCHEMAS["other"]), max_in, max_tokens)
+
+
+def filter_urls(goal: str, items: list[str], n: int = 20, hint: str = "") -> list[str]:
+    """Select n most relevant URLs. Items may be 'anchor | url' or plain URLs."""
+    user_msg = f"Goal: {goal}"
+    if hint:
+        user_msg += f"\nContext: {hint}"
+    user_msg += f"\n\nSelect the {n} most relevant to scrape:\n" + "\n".join(i[:100] for i in items[:80])
+    out = _llm("agent", n_ctx=16384).create_chat_completion(
+        messages=[
+            {"role": "system", "content": _AGENT_SYSTEM},
+            {"role": "user", "content": user_msg},
+        ],
+        max_tokens=512, temperature=0.2,
+        response_format={"type": "json_object", "schema": _URL_SCHEMA},
+    )["choices"][0]["message"]["content"]
+    selected = _json(out, {"urls": items[:n]})["urls"][:n]
+    return [s.split(" | ")[-1] if " | " in s else s for s in selected]
+
+
+def expand(goal: str, n: int = 6) -> list[str]:
+    """Generate n free-form dark web search queries from a research goal."""
+    out = _llm("agent", n_ctx=8192).create_chat_completion(
+        messages=[
+            {"role": "system", "content": _AGENT_SYSTEM},
+            {"role": "user", "content": f"Generate {n} search queries for: {goal}"},
+        ],
+        max_tokens=256, temperature=0.8,
+        response_format={"type": "json_object", "schema": _QUERY_SCHEMA},
+    )["choices"][0]["message"]["content"]
+    return _json(out, {"queries": [goal]})["queries"][:n]
+
+
+def synthesize(goal: str, docs: dict, max_chars: int = 6000) -> str:
+    """Synthesize crawled docs into a research summary."""
+    context = "\n\n".join(
+        f"[{doc.metadata.title or 'untitled'}] {url}\n{(doc.markdown or '')[:200]}"
+        for url, doc in docs.items()
+    )[:max_chars]
+    return _llm("agent", n_ctx=8192).create_chat_completion(
+        messages=[
+            {"role": "system", "content": _SYNTHESIS_SYSTEM},
+            {"role": "user", "content": f"Goal: {goal}\n\n{context}"},
+        ],
+        max_tokens=1024, temperature=0.3,
+    )["choices"][0]["message"]["content"]

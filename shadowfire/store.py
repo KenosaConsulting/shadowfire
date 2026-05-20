@@ -44,6 +44,14 @@ def init():
                 scraped_at          TIMESTAMP
             )
         """)
+        con.execute("""
+            CREATE TABLE IF NOT EXISTS sources (
+                url       VARCHAR PRIMARY KEY,
+                name      VARCHAR,
+                category  VARCHAR,
+                added_at  TIMESTAMP DEFAULT current_timestamp
+            )
+        """)
         # Additive migrations — safe to re-run
         for col, dtype in [
             ("circuit_id",        "VARCHAR"),
@@ -57,6 +65,27 @@ def init():
                 con.execute(f"ALTER TABLE pages ADD COLUMN {col} {dtype}")
             except Exception:
                 pass  # column already exists
+
+
+def upsert_source(url: str, name: str, category: str):
+    with _conn() as con:
+        con.execute(
+            "INSERT OR REPLACE INTO sources (url, name, category) VALUES (?, ?, ?)",
+            [url, name, category],
+        )
+
+
+def get_sources(categories: list[str] | None = None) -> list[dict]:
+    with _conn() as con:
+        if categories:
+            placeholders = ", ".join("?" * len(categories))
+            rows = con.execute(
+                f"SELECT url, name, category FROM sources WHERE category IN ({placeholders})",
+                categories,
+            ).fetchall()
+        else:
+            rows = con.execute("SELECT url, name, category FROM sources").fetchall()
+    return [{"url": r[0], "name": r[1], "category": r[2]} for r in rows]
 
 
 def insert_run(id: str, started_at, ended_at, config: dict):
