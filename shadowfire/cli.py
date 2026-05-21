@@ -7,7 +7,6 @@ import sys
 
 from .api import crawl as _crawl, scrape as _scrape, map as _map
 from .search import search as _search, search_all as _search_all, ENGINES
-from .search import ENGINES
 from .guard import has_injection, wrap
 from .store import DB_PATH, init
 
