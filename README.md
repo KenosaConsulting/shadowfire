@@ -1,6 +1,6 @@
 # ShadowFire
 
-Firecrawl for the deep web. Crawls `.onion` sites over Tor and returns clean, LLM-ready Markdown — with a zero-trust security layer, circuit telemetry, and persistent analytics storage.
+Firecrawl for the deep web. Crawls `.onion` sites over Tor and returns clean, LLM-ready Markdown — with a zero-trust security layer, multi-engine dark web search, a curated seed database, and an LLM-driven deep research pipeline.
 
 ## Architecture
 
@@ -16,23 +16,34 @@ TorController (stem)            — Tor process lifecycle, NEWNYM circuit rotati
             │       └── wrap()         — <untrusted_source> boundary for LLM consumption
             │
             ├── fetch/http.py          — httpx SOCKS5 client, follow redirects
-            ├── fetch/browser.py       — Playwright/Firefox fallback for JS-heavy pages
+            ├── fetch/browser.py       — Playwright/Firefox+Chromium fallback for JS-heavy pages
             │
             ├── extract/               — Firecrawl-parity extraction pipeline
             │       ├── cleaner.py     — 42-selector noise removal, main content isolation
             │       ├── metadata.py    — title, OG, Dublin Core, custom meta tags
             │       └── converter.py   — GFM Markdown + Firecrawl post-processing
             │
-            ├── crawler/spider.py      — async BFS, .onion link filter + SSRF guard
+            ├── crawler/
+            │       ├── spider.py      — async BFS, .onion link filter + SSRF guard
+            │       └── mapper.py      — lightweight URL discovery (no content, anchor text)
+            │
+            ├── search.py              — multi-engine fan-out (torch, tor66, onionland, notevil)
+            │
+            ├── sources/
+            │       └── directories.py — dynamic directory seeding (Hidden Wiki navigation)
             │
             ├── llm/                   — small-LLM tier (llama.cpp + Q4_K_M GGUF, Metal)
             │       ├── triage()       — Qwen3-1.7B: page_type + language (<1s, inline-safe)
             │       ├── enrich()       — ReaderLM-v2: schema-driven JSON extraction (async)
+            │       ├── expand()       — Qwen3-8B: research goal → N search queries
+            │       ├── filter_urls()  — Qwen3-8B: select relevant URLs from inventory
+            │       ├── synthesize()   — Qwen3-8B: crawled docs → research summary
             │       └── SCHEMAS        — 8 page types, dispatched via auto()
             │
-            ├── api.py                 — scrape(url, js=False) + crawl() public surface
+            ├── api.py                 — scrape() + crawl() + map() public surface
             │
             └── store.py               — DuckDB persistence (data/shadowfire.db)
+                                         tables: runs, pages, sources
 ```
 
 **Extraction** mirrors Firecrawl's pipeline: nh3 sanitization → BS4 noise removal → markdownify GFM conversion → Rust-equivalent post-processing. Output schema matches Firecrawl's `Document` type.
@@ -43,15 +54,7 @@ TorController (stem)            — Tor process lifecycle, NEWNYM circuit rotati
 
 - Python 3.11+
 - Tor (`brew install tor` on macOS, `sudo apt install tor` on Linux)
-- DuckDB Python package (installed with the project; creates a local `data/shadowfire.db` file)
-
-## Stack
-
-- `shadowfire/store.py` uses DuckDB for local persistence and analytics
-- `data/shadowfire.db` is the default local database file
-- The database file is ignored by Git so each user gets their own local copy
-- `shadowfire.store.init()` creates the tables and applies additive migrations
-- The test scripts call `init()` automatically before writing results
+- Playwright browsers (`playwright install firefox chromium`)
 
 ## Setup
 
@@ -79,18 +82,17 @@ sudo systemctl enable --now tor
 
 ```bash
 python3 -m venv .venv
-python3 -m pip install .
+pip install -e .
+playwright install firefox chromium
 ```
 
-**4. Create your local DuckDB**
+**4. Initialise the database**
 
 ```bash
 shadowfire init-db
 ```
 
-This creates `data/shadowfire.db` and the `runs` / `pages` tables if they do not exist yet. If you want to reset the local database, delete `data/shadowfire.db` and run the command again.
-
-For development, use `python3 -m pip install -e .` instead of `python3 -m pip install .`. Either way, the `shadowfire` command and `python -m shadowfire init-db` both initialize the same local DuckDB file.
+Creates `data/shadowfire.db` with `runs`, `pages`, and `sources` tables. Safe to re-run.
 
 ## Usage
 
@@ -103,64 +105,109 @@ shadowfire scrape http://example.onion/
 # Force Playwright rendering (JS-heavy SPAs); auto-triggered when content < 200 chars
 shadowfire scrape --js http://example.onion/
 
-# Full Document as JSON; optionally scan for prompt injection
-shadowfire scrape --json --guard http://example.onion/
+# Scan for prompt injection and wrap output for LLM consumption
+shadowfire scrape --guard http://example.onion/
 
-# BFS crawl — prints summary table (URL / HTTP / chars / title)
+# BFS crawl — summary table (URL / HTTP / chars / title)
 shadowfire crawl http://example.onion/ --depth 2 --max-pages 50 --concurrency 3
 
-# JSON output for piping
-shadowfire crawl --json http://example.onion/ | jq 'keys'
+# Discover all internal URLs on a site (no content fetch)
+shadowfire map http://example.onion/ --depth 2 --max-urls 200
+
+# Search dark web indexes and return seed URLs
+shadowfire search "research chemicals" --engine tor66
+shadowfire search "research chemicals" --engine torch --crawl --depth 1
+
+# Full deep research pipeline (expand → search → map → filter → scrape → synthesize)
+shadowfire research "research chemical manufacturing" --engines all
+shadowfire research "aliens" --engines torch,tor66 --no-synthesize
+shadowfire research "goal" --no-crawl   # print expanded queries only
 ```
+
+### Search engines
+
+| Engine | URL | Notes |
+|---|---|---|
+| `torch` | `.onion` | Veteran dark web index |
+| `tor66` | `.onion` | Best result volume |
+| `onionland` | `.onion` | Independent index |
+| `notevil` | `.onion` | Small index, clean results |
+| `ahmia` | `.onion` | JS-rendered; needs Chromium path |
+| `haystak` | — | Address rotates; update `ENGINES["haystak"]` when known |
+
+Add a new engine: one line in `search.py`'s `ENGINES` dict. Automatically included in `--engines all`.
+
+### Research pipeline
+
+`shadowfire research` runs a six-stage pipeline:
+
+```
+expand      Qwen3-8B    goal → N free-form queries
+search      all engines queries → seed URLs (parallel fan-out)
+map         httpx       seeds → internal URL inventory with anchor text
+filter      Qwen3-8B    inventory + goal → targeted URL list
+scrape      httpx/PW    targeted URLs → Documents (depth=0)
+synthesize  Qwen3-8B    all pages × title+200chars → research summary
+```
+
+First run downloads ~5GB of Qwen3-8B weights (Q4_K_M, cached in HF). Metal acceleration on Apple Silicon.
+
+### Seed database
+
+`data/shadowfire.db` includes a `sources` table — a curated inventory of categorised `.onion` sites bootstrapped from the Hidden Wiki. The research pipeline merges these seeds with live search results before mapping.
+
+```python
+from shadowfire.store import upsert_source, get_sources
+
+upsert_source("http://example.onion/", name="Example", category="forum")
+seeds = get_sources()  # all sources
+```
+
+Categories currently seeded: `darknet_market`, `drugs`, `forum`, `search`.
 
 ### Python API
 
 ```python
-from shadowfire.api import scrape, crawl
+from shadowfire.api import scrape, crawl, map
 from shadowfire.guard import has_injection, wrap
+from shadowfire.llm import expand, filter_urls, synthesize
 
-# Single page — browser fallback fires automatically when content is sparse
+# Single page
 doc = scrape("http://example.onion/")
+doc = scrape("http://example.onion/", js=True)  # force browser render
 
-# Force Playwright rendering for known JS-heavy sites
-doc = scrape("http://example.onion/", js=True)
+# BFS crawl — multi-seed support
+results = crawl(["http://a.onion/", "http://b.onion/"], depth=1, max_pages=30)
 
-# Check for prompt injection before passing to an LLM
+# URL inventory (no content)
+urls = map("http://example.onion/", depth=2, max_urls=200)
+urls = map("http://example.onion/", include_text=True)  # anchor | url format
+
+# Injection guard
 if not has_injection(doc.markdown):
     llm_input = wrap(doc.markdown)
 
-# BFS crawl — returns {url: Document}; browser fallback applies per-page
-results = crawl("http://example.onion/", depth=2, max_pages=50)
+# LLM research tier
+queries  = expand("research chemical synthesis", n=6)
+targeted = filter_urls("goal", inventory, n=20, hint="optional context")
+summary  = synthesize("goal", results)
 ```
 
 ### JS rendering
 
-`fetch/browser.py` wraps Playwright/Firefox routed through the same Tor SOCKS5 proxy. It fires automatically in both `scrape()` and the crawler when the httpx result yields fewer than 200 chars of Markdown — the same threshold `llm.triage()` uses to flag thin content. Pass `js=True` (API) or `--js` (CLI) to force it regardless of content length.
+`fetch/browser.py` wraps Playwright through the Tor SOCKS5 proxy. Firefox is the default (matches Tor Browser fingerprint). Chromium is available for sites that use `@-moz-document` to block Firefox (e.g. Ahmia's `.onion`).
+
+Auto-triggers in both `scrape()` and the crawler when httpx yields fewer than 200 chars of Markdown.
 
 ### LLM tier
 
-Small open-source models (llama.cpp Q4_K_M GGUFs, Metal on Apple Silicon) for jobs the deterministic pipeline can't do. First call per model downloads ~1.1 GB of weights into the HF cache; subsequent calls reuse the loaded handle.
+| Function | Model | Size | Warm latency | License |
+|---|---|---|---:|---|
+| `triage` | Qwen3-1.7B | ~1GB | ~700ms | Apache 2.0 |
+| `enrich` | ReaderLM-v2 | ~1GB | ~5–30s | CC-BY-NC-4.0 |
+| `expand` / `filter_urls` / `synthesize` | Qwen3-8B | ~5GB | ~5–30s | Apache 2.0 |
 
-```python
-from shadowfire.llm import triage, enrich, auto, SCHEMAS
-
-# Fast page classification — <1s warm, inline-safe
-t = triage(doc.markdown, title=doc.metadata.title)
-# → {'page_type': 'forum', 'language': 'en', 'thin': False}
-
-# Schema-driven structured extraction — ~5-30s, async-only
-data = enrich(doc.markdown, schema=SCHEMAS["forum"])
-# → {'name': ..., 'subforums': [...], 'recent_thread_titles': [...]}
-
-# Dispatcher: pick the schema + token caps by page_type
-data = auto(doc.markdown, t["page_type"])
-```
-
-| Function | Model | Warm latency | License |
-|---|---|---:|---|
-| `triage` | Qwen3-1.7B | ~700ms | Apache 2.0 |
-| `enrich` | ReaderLM-v2 | ~5-30s | CC-BY-NC-4.0 (research only) |
-
+All models run locally via llama.cpp with Metal acceleration. First call downloads weights to HF cache; subsequent calls reuse the loaded handle.
 
 ### `Document` fields
 
@@ -184,17 +231,14 @@ data = auto(doc.markdown, t["page_type"])
 
 ## Storage schema
 
-Results persist to `data/shadowfire.db` (DuckDB) across all runs.
-
-The file is local to your machine and not tracked in Git. If it is missing, `shadowfire.store.init()` will recreate it and initialize the schema.
-
-**`runs`** — one row per test execution
+**`sources`** — curated seed inventory
 
 | Column | Type | Description |
 |---|---|---|
-| `id` | VARCHAR | UUID |
-| `started_at` / `ended_at` | TIMESTAMP | Run window |
-| `config` | JSON | Target list, depth, concurrency |
+| `url` | VARCHAR | `.onion` URL |
+| `name` | VARCHAR | Human-readable name |
+| `category` | VARCHAR | darknet_market, drugs, forum, search, … |
+| `added_at` | TIMESTAMP | When seeded |
 
 **`pages`** — one row per scraped page
 
@@ -203,65 +247,29 @@ The file is local to your machine and not tracked in Git. If it is missing, `sha
 | `url` | VARCHAR | Final URL after redirects |
 | `status_code` | INTEGER | HTTP response code |
 | `fetch_ms` | INTEGER | Wall-clock fetch latency |
-| `html_bytes` | INTEGER | Raw HTML size |
 | `markdown_chars` | INTEGER | Extracted Markdown size |
-| `link_count` | INTEGER | Discovered outbound links |
-| `image_count` | INTEGER | Discovered images |
 | `title` | VARCHAR | Page title |
-| `content_type` | VARCHAR | Server-reported content type |
 | `injection_detected` | BOOLEAN | DeBERTa classifier result |
 | `circuit_id` | VARCHAR | Tor circuit used |
 | `exit_fingerprint` | VARCHAR | Exit relay fingerprint |
-| `exit_nickname` | VARCHAR | Exit relay nickname |
-| `page_type` | VARCHAR | LLM triage classification (blog, forum, market, docs, index, phishing, other) |
-| `language` | VARCHAR | LLM-detected ISO-639-1 language code |
-| `error` | VARCHAR | Exception message if fetch failed |
-
-## Testing
-
-```bash
-# Full capability stress test (fetch, extraction, security, crawl suites)
-.venv/bin/python3 tests/stress.py
-
-# Multi-run loop — random targets, circuit + page-type + language telemetry
-.venv/bin/python3 tests/loop.py --runs 20
-
-# Head-to-head extractor benchmark (markdownify vs ReaderLM-v2 vs Qwen3-1.7B, GGUF on Metal)
-.venv/bin/python3 tests/benchmark.py
-
-# Example analytical queries
-python3 -c "
-from shadowfire.store import _conn
-with _conn() as con:
-    # Latency distribution
-    print(con.execute('''
-        SELECT COUNT(*) pages, AVG(fetch_ms)::INT avg_ms,
-               PERCENTILE_CONT(0.95) WITHIN GROUP (ORDER BY fetch_ms)::INT p95_ms
-        FROM pages
-    ''').fetchone())
-
-    # Exit node performance
-    print(con.execute('''
-        SELECT exit_nickname, COUNT(*) pages, AVG(fetch_ms)::INT avg_ms
-        FROM pages WHERE exit_nickname IS NOT NULL
-        GROUP BY exit_nickname ORDER BY avg_ms
-    ''').fetchall())
-"
-```
+| `page_type` | VARCHAR | LLM triage classification |
+| `language` | VARCHAR | ISO-639-1 language code |
 
 ## Linux / Raspberry Pi
 
-Same `torrc` content. Two changes in code:
+Same `torrc`. Two changes:
 - `brew services start tor` → `sudo systemctl enable --now tor`
 - Cookie path in `shadowfire/tor/proxy.py`: `/opt/homebrew/var/lib/tor/control_auth_cookie` → `/var/lib/tor/control_auth_cookie`
 
 ## Decisions & Roadmap
 
 - [`docs/decisions.md`](docs/decisions.md) — architectural decisions, deferred features, upgrade paths
-- [`docs/llm-tier.md`](docs/llm-tier.md) — small-LLM tier: triage, enrich, schema design, benchmark results, license posture
+- [`docs/llm-tier.md`](docs/llm-tier.md) — LLM tier design, benchmark results, license posture
 
 Deferred features:
+- **`--deep` mode** — per-page map-reduce synthesis for exhaustive single-site analysis
+- **Multi-engine fan-out for directories** — parallel Hidden Wiki category navigation
 - **Parallel Tor circuits** — multiple `SOCKSPort` entries for concurrent crawling
-- **NEWNYM retry integration** — circuit rotation wired into the crawler's retry ladder
+- **NEWNYM retry** — circuit rotation wired into the crawler's retry ladder
 - **PII stripping** — presidio-analyzer before scraped content enters LLM context
-- **`enrich` model swap** — replace ReaderLM-v2 (CC-BY-NC) with an Apache/MIT alternative before any commercial deployment
+- **`enrich` model swap** — replace ReaderLM-v2 (CC-BY-NC) with Apache/MIT before commercial use

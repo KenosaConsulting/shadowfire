@@ -97,7 +97,7 @@ def _cmd_research(args: argparse.Namespace) -> int:
     from .sources.directories import seeds_from_directories
 
     _log("pulling inventory...", end="\r")
-    db_seeds = [s["url"] for s in get_sources()]
+    db_seeds = [f"{s['name']} ({s['category']}) | {s['url']}" for s in get_sources()]
 
     engines = None if args.engines == "all" else [e.strip() for e in args.engines.split(",")]
     _log(f"searching {args.engines}...", end="\r")
